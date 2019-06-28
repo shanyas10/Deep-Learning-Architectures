@@ -19,7 +19,7 @@ Deconvolution, also known as Transposed Convolution goes back from the output di
 Visualizations produced are reconstructed patterns from an input image coming from the validation set that cause high activations in a given feature map. To produce input images that result in maximum activations, a separate Deconvnet is attached to the output of each layer whose features we want to visualize. Each Deconvnet itself is a neural network whose input is activations of a particular layer, and the output is an image depicting pixels that are responsible for maximum activation of a convolutional kernel of our interest for a given convolutional layer. In the paper, Deconvnet is described as a sequence of transposed convolutions, de-pooling and a special modified ReLU (sequence is the reverse of the steps taken to produce the layer's output). The output of the Deconvnet has the same dimensions as the input image in the convnet we are visualizing.
 
 De-pooling operation (de-pool) is expanding dimensionality of data by remembering the pooled positions in the forward pass of the network we want to visualize. 
-![image](https://pechyonkin.me/images/201901-zfnet/layer3.png)
+![image](https://www.yjpark.me/assets/expressions/Unpooling.png)
 Modified ReLU (relu*) only passes forward positive activation, this is equivalent to backpropagating only positive gradients, which is different from backpropagating through a regular ReLU. This is why the authors call it modified.
 
 ### Visualizations
