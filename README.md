@@ -1,6 +1,6 @@
 # Deep-Learning-Architectures
 
-Implementation of Deep Learning Architectures using Keras. This repository also includes codes for Fine-Tuning and Transfer Learning using pre-trained VGG-16 Model. Summary of the architecture and ket takeaways from the corresponding papers have been included as well.
+This repository contains code for implementation of various Deep Learning Architectures using Keras alongwith implementation of FineTuning and Transfer Learning Experiments on pretrained VGGNet model. The summaries for each architecture and key takeaways from the corresponding papers are also included for reference.
 
 1. [AlexNet](https://github.com/thechange/Deep-Learning-Architectures/tree/master/AlexNet%20Implementation)
 2. [VGGNet](https://github.com/thechange/Deep-Learning-Architectures/tree/master/VGGNet%20Implementation)
