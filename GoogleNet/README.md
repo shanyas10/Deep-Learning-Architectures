@@ -45,17 +45,30 @@ The network is 22 layers deep when counting only layers with parameters (or 27 l
 
 Another interesting addition to the architecture is to change the second last fully-connected layer with an average pooling layer. This layer spatially averages the feature map, converting 7 × 7 × 1024 input to 1 × 1 × 1024. Doing not only reduces the computation and the number of parameters, by a factor of 49, of the network but also improves the accuracy of the model, improving top-1 accuracy by 0.6%. 
 
+
+## GoogleNet Training
+
+### Auxillary Classifiers
+
 To address the vanishing gradient problem, special extra structures are added to the network (these are removed during testing). These are auxiliary classifiers attached to intermediate layers which serve two purposes:
 
 * Doing this makes the layers in the middle of the network more discriminative and thus make them able to extract better features.
+
 * All the losses from each classifier gets added up, taking contribution from the auxiliary classifier lower than the main one, during training. The gradient from the main classifier which would have otherwise become very small, and thus slowing training, by time it reached the lower initial layers, receives gradient from the auxiliary classifiers and thus the net gradient becomes big enough to allow training to progress.
 
 The exact structure of the extra network on the side, including the auxiliary classifier, is as follows:
 
 * An average pooling layer with 5 × 5 filter size and stride 3, resulting in an 4 × 4 × 512 output for the (4a), and 4 × 4 × 528 for the (4d) stage.
-A 1 × 1 convolution with 128 filters for dimension reduction and rectified linear activation.
-A fully connected layer with 1024 units and rectified linear activation.
-A dropout layer with 70% ratio of dropped outputs.
-A linear layer with softmax loss as the classifier (predicting the same 1000 classes as the main classifier, but removed at inference time).
+* A 1 × 1 convolution with 128 filters for dimension reduction and rectified linear activation.
+* A fully connected layer with 1024 units and rectified linear activation.
+* A dropout layer with 70% ratio of dropped outputs.
+* A linear layer with softmax loss as the classifier (predicting the same 1000 classes as the main classifier, but removed at inference time).
 
-## GoogleNet Training
+At test time, these auxiliary networks are discarded.
+
+### Training Details
+
+
+* The networks were trained using the DistBelief distributed machine learning system using modest amount of model and data-parallelism. 
+* Training used asynchronous stochastic gradient descent with 0.9 momentum, fixed learning rate schedule (decreasing the learning rate by 4% every 8 epochs). 
+* Polyak averaging was used to create the final model used at inference time.
